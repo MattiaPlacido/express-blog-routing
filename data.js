@@ -50,7 +50,4 @@ const posts = [
   },
 ];
 
-const counter = posts.length;
-
 module.exports = posts;
-posts.unshift(counter);

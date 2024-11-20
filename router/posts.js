@@ -11,9 +11,6 @@ router.get("/bacheca", (request, response) => {
 
   //se è presente la richiesta
   if (nameFilter) {
-    //rimuovo il contatore che altrimenti causa problemi con includes e toLowerCase nel filter sotto
-    posts.shift();
-
     //creo un array con solo gli elementi filtrati
     const filteredPosts = posts.filter((post) => {
       return post.titolo.toLowerCase().includes(nameFilter.toLowerCase());
@@ -55,7 +52,34 @@ router.put("/posts/:id", (req, res) => {
 
 //destroy
 router.delete("/posts/:id", (req, res) => {
-  res.send("Il post " + req.params.id + " è stato eliminato"); // non mi vanno i backtick
+  const id = req.params.id;
+  //l'id è valido
+  if (id && !isNaN(id)) {
+    //cerco se l'id corrisponde a qualcosa
+    const targetedPost = posts.find((post, index) => post.id == id);
+    //id non presente nei dati
+    if (!targetedPost) {
+      res.status(404).json({
+        error: "Id not found",
+      });
+      //id presente
+    } else {
+      //cerco l'indice del post da eliminare perchè non posso soltanto avendolo appoggiato ad una variabile
+      let postIndex;
+      posts.forEach((post, index) => {
+        if (post.id == id) postIndex = index;
+      });
+      //elimino il post richiesto
+      posts.splice(postIndex, 1);
+      //comunico
+      res.send("Il post " + req.params.id + " è stato eliminato"); // non mi vanno i backtick
+    }
+    //l'id non è valido
+  } else {
+    res.status(400).json({
+      error: "Inserted content is not valid as an ID",
+    });
+  }
 });
 
 //esporto il modulo
