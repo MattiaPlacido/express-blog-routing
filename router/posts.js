@@ -8,6 +8,7 @@ const posts = require("../data.js");
 router.get("/bacheca", (request, response) => {
   //salvo la richiesta in una variabile
   const nameFilter = request.query.term;
+  let counter;
 
   //se è presente la richiesta
   if (nameFilter) {
@@ -17,14 +18,30 @@ router.get("/bacheca", (request, response) => {
     });
 
     //rispondo con il json contenente i post
-    response.json(filteredPosts);
-  } else response.json(posts);
+    counter = filteredPosts.length;
+    const output = {
+      posts: filteredPosts,
+      counter: counter,
+    };
+    response.json(output);
+  } else {
+    counter = posts.length; //avrei sicuramente potuto scrivere meglio per risparmiare righe e non dichiarare output in entrambe le condizioni sono sinceramente fuso
+    const output = {
+      posts: posts,
+      counter: counter,
+    };
+    response.json(output);
+  }
 });
 
 //index
 router.get("/posts", (req, res) => {
   const counter = posts.length;
-  res.json(posts + counter);
+  const output = {
+    posts: posts,
+    counter: counter,
+  };
+  res.json(output);
 });
 
 //show
