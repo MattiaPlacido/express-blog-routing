@@ -23,7 +23,8 @@ router.get("/bacheca", (request, response) => {
 
 //index
 router.get("/posts", (req, res) => {
-  res.json(posts);
+  const counter = posts.length;
+  res.json(posts + counter);
 });
 
 //show
