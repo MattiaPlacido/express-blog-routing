@@ -44,26 +44,18 @@ router.get("/posts/:id", (req, res) => {
 });
 
 //store
-router.post("/", (req, res) => {
-  res.send(posts);
+router.post("/posts", (req, res) => {
+  res.send("Il tuo nuovo post è stato creato");
 });
 
 //update
-router.put("/:id", (req, res) => {
-  const text = "Il post è stato aggiunto";
-  res.send(text);
-});
-
-//modify
-router.patch("/:id", (req, res) => {
-  const text = "Il post è stato aggiunto";
-  res.send(text);
+router.put("/posts/:id", (req, res) => {
+  res.send("Il post " + req.params.id + " è stato aggiornato"); // non mi vanno i backtick
 });
 
 //destroy
-router.delete("/:id", (req, res) => {
-  const text = "Il post è stato aggiunto";
-  res.send(text);
+router.delete("/posts/:id", (req, res) => {
+  res.send("Il post " + req.params.id + " è stato eliminato"); // non mi vanno i backtick
 });
 
 //esporto il modulo
